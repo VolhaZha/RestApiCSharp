@@ -4,7 +4,6 @@ using RestApiCSharp.Authentication;
 namespace RestApiCSharp.Clients
 {
     public class ApiClient
-
     {
         private static ApiClient? _instance;
 
