@@ -10,12 +10,14 @@ namespace RestApiCSharp.Clients
         private readonly string _baseUrl;
         private readonly string _clientId;
         private readonly string _clientSecret;
+        private RestClient _client;
 
         private ApiClient (string baseUrl, string clientId, string clientSecret)
         {
             _baseUrl = baseUrl;
             _clientId = clientId;
             _clientSecret = clientSecret;
+            _client = CreateClientWithScope("");
         }
 
         public static void Initialize(string baseUrl, string clientId, string clientSecret)
@@ -39,10 +41,28 @@ namespace RestApiCSharp.Clients
             });
         }
 
-        public static RestClient GetClientWithScope(string scope)
+        public void SetClientScope(string scope)
         {
-            var client = ApiClient.GetInstance();
-            return client.CreateClientWithScope(scope);
+            _client = CreateClientWithScope(scope);
+        }
+
+        public RestResponse ExpandZipCodes(string scope, List<string> zipCodes)
+        {
+            SetClientScope(scope);
+
+            var request = new RestRequest("/zip-codes/expand", Method.Post);
+
+            request.AddJsonBody(zipCodes);
+
+            return _client.Post(request);
+        }
+
+        public RestResponse GetZipCodes(string scope)
+        {
+            SetClientScope(scope);
+
+            var request = new RestRequest("/zip-codes", Method.Get);
+            return _client.Get(request);
         }
     }
 }
