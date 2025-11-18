@@ -64,5 +64,32 @@ namespace RestApiCSharp.Clients
             var request = new RestRequest("/zip-codes", Method.Get);
             return _client.Get(request);
         }
+
+        public RestResponse CreateUsers (string scope, User user)
+        {
+            SetClientScope(scope);
+
+            var request = new RestRequest("/users", Method.Post);
+
+            request.AddJsonBody(user);
+
+            var response = _client.Post(request);
+
+            if (!response.IsSuccessful)
+            {
+                Console.WriteLine($"Error: {response.StatusCode}, Response Body: {response.Content}");
+            }
+
+            return response;
+
+        }
+
+        public RestResponse GetUsers(string scope)
+        {
+            SetClientScope(scope);
+
+            var request = new RestRequest("/users", Method.Get);
+            return _client.Get(request);
+        }
     }
 }
