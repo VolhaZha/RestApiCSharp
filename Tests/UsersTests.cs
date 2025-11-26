@@ -20,14 +20,11 @@ namespace RestApiCSharp.Tests
                 new User { Name = "u3", Sex = "FEMALE" }
             };
 
-            foreach (var user in users)
-            {
-                ApiClientInstance.CreateUsers(ConstantsTesting.WriteScope, user);
-            }
+            ApiClientInstance.CreateUsersList(ConstantsTesting.WriteScope, users);
         }
 
         [Test]
-        public void AddUserAllFields_Return201()
+        public void AddUserAllFields_Return201_Test()
         {
             var user = new User
             {
@@ -46,7 +43,7 @@ namespace RestApiCSharp.Tests
         }
 
         [Test]
-        public void AddUserAllFields_UserAdded()
+        public void AddUserAllFields_UserAdded_Test()
         {
             RestResponse response = ApiClientInstance.GetUsers(ConstantsTesting.ReadScope);
 
@@ -55,7 +52,7 @@ namespace RestApiCSharp.Tests
         }
 
         [Test]
-        public void AddUserAllFields_ZipCodeRemoved()
+        public void AddUserAllFields_ZipCodeRemoved_Test()
         {
             RestResponse response = ApiClientInstance.GetZipCodes(ConstantsTesting.ReadScope);
 
@@ -64,7 +61,7 @@ namespace RestApiCSharp.Tests
         }
 
         [Test]
-        public void AddUserReqFields_Return201()
+        public void AddUserReqFields_Return201_Test()
         {
             var user = new User
             {
@@ -81,7 +78,7 @@ namespace RestApiCSharp.Tests
         }
 
         [Test]
-        public void AddUserReqFields_UserAdded()
+        public void AddUserReqFields_UserAdded_Test()
         {
             RestResponse response = ApiClientInstance.GetUsers(ConstantsTesting.ReadScope);
 
@@ -90,7 +87,7 @@ namespace RestApiCSharp.Tests
         }
 
         [Test]
-        public void AddUserIncorrectZipCode_Return424()
+        public void AddUserIncorrectZipCode_Return424_Test()
         {
             var user = new User
             {
@@ -102,25 +99,14 @@ namespace RestApiCSharp.Tests
 
             RestResponse response = null;
 
-            try
-            {
-                response = ApiClientInstance.CreateUsers(ConstantsTesting.WriteScope, user);
-            }
-            catch (HttpRequestException ex)
-            {
-                Assert.That(ex.Message, Does.Contain("FailedDependency"),
-                    $"Expected exception with message containing 'FailedDependency', but got {ex.Message}");
-                return;  
-            }
+            response = ApiClientInstance.CreateUsers(ConstantsTesting.WriteScope, user);
 
-            Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.FailedDependency),
-                $"Status code 424 not returned. " +
-                $"Expected status code 424 (FailedDependency), " +
-                $"but got {response.StatusCode}. Response content: {response.Content}");
+            Assert.That(response.Content, Does.Contain("FailedDependency"),
+                 $"Response content does not indicate FailedDependency. Content: {response.Content}");
         }
 
         [Test]
-        public void AddUserIncorrectZipCode_UserNotAdded()
+        public void AddUserIncorrectZipCode_UserNotAdded_Test()
         {
             RestResponse response = ApiClientInstance.GetUsers(ConstantsTesting.ReadScope);
 
@@ -129,7 +115,7 @@ namespace RestApiCSharp.Tests
         }
 
         [Test]
-        public void AddUserDuplicate_Return400()
+        public void AddUserDuplicate_Return400_Test()
         {
             var user = new User
             {
@@ -139,16 +125,7 @@ namespace RestApiCSharp.Tests
 
             RestResponse response = null;
 
-            try
-            {
-                response = ApiClientInstance.CreateUsers(ConstantsTesting.WriteScope, user);
-            }
-            catch (HttpRequestException ex)
-            {
-                Assert.That(ex.Message, Does.Contain("BadRequest"),
-                    $"Expected exception with message containing 'BadRequest', but got {ex.Message}");
-                return;
-            }
+            response = ApiClientInstance.CreateUsers(ConstantsTesting.WriteScope, user);
 
             Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest),
                 $"Status code 400 not returned. " +
@@ -157,7 +134,7 @@ namespace RestApiCSharp.Tests
         }
 
         [Test]
-        public void AddUserDuplicate_UserNotAdded()
+        public void AddUserDuplicate_UserNotAdded_Test()
         {
             var initialResponse = ApiClientInstance.GetUsers(ConstantsTesting.ReadScope);
             var initialUsers = JsonConvert.DeserializeObject<List<User>>(initialResponse.Content);

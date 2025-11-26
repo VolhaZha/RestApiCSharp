@@ -1,5 +1,5 @@
-﻿using RestSharp;
-using RestApiCSharp.Authentication;
+﻿using RestApiCSharp.Authentication;
+using RestSharp;
 
 namespace RestApiCSharp.Clients
 {
@@ -71,17 +71,43 @@ namespace RestApiCSharp.Clients
 
             var request = new RestRequest("/users", Method.Post);
 
-            request.AddJsonBody(user);
-
-            var response = _client.Post(request);
-
-            if (!response.IsSuccessful)
+            if (user != null)
             {
-                Console.WriteLine($"Error: {response.StatusCode}, Response Body: {response.Content}");
+                request.AddJsonBody(user);
             }
+            else
+            {
+                throw new ArgumentNullException(nameof(user), "User object cannot be null.");
+            }
+            try
+            {
+                var response = _client.Post(request);
 
-            return response;
+                if (!response.IsSuccessful)
+                {
+                    throw new HttpRequestException(
+                        $"Request failed with status code {response.StatusCode}. Response content: {response.Content}");
+                }
 
+                return response;
+            }
+            catch (HttpRequestException ex)
+            {
+                Console.WriteLine($"Request failed with exception: {ex.Message}");
+
+                return new RestResponse
+                {
+                    Content = ex.Message
+                };
+            }
+        }
+
+        public void CreateUsersList(string scope, List<User> users)
+        {
+            foreach (var user in users)
+            {
+                CreateUsers(scope, user); 
+            }
         }
 
         public RestResponse GetUsers(string scope)
