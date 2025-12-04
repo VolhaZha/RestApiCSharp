@@ -71,14 +71,13 @@ namespace RestApiCSharp.Clients
 
             var request = new RestRequest("/users", Method.Post);
 
-            if (user != null)
-            {
-                request.AddJsonBody(user);
-            }
-            else
+            if (user == null)
             {
                 throw new ArgumentNullException(nameof(user), "User object cannot be null.");
             }
+
+            request.AddJsonBody(user);
+
             try
             {
                 var response = _client.Post(request);
