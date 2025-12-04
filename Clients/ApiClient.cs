@@ -109,11 +109,27 @@ namespace RestApiCSharp.Clients
             }
         }
 
-        public RestResponse GetUsers(string scope)
+        public RestResponse GetUsers(string scope, string? olderThan = null, string? youngerThan = null, string? sex = null)
         {
             SetClientScope(scope);
 
             var request = new RestRequest("/users", Method.Get);
+
+            if (!string.IsNullOrEmpty(olderThan))
+            {
+                request.AddQueryParameter("olderThan", olderThan);
+            }
+
+            if (!string.IsNullOrEmpty(youngerThan))
+            {
+                request.AddQueryParameter("youngerThan", youngerThan);
+            }
+
+            if (!string.IsNullOrEmpty(sex))
+            {
+                request.AddQueryParameter("sex", sex);
+            }
+
             return _client.Get(request);
         }
     }
