@@ -1,4 +1,5 @@
-﻿using RestApiCSharp.Authentication;
+﻿using NUnit.Framework.Internal;
+using RestApiCSharp.Authentication;
 using RestSharp;
 
 namespace RestApiCSharp.Clients
@@ -109,28 +110,27 @@ namespace RestApiCSharp.Clients
             }
         }
 
-        public RestResponse GetUsers(string scope, string? olderThan = null, string? youngerThan = null, string? sex = null)
+        public RestResponse GetUsers(string scope, List<(string name, string value)>? parameters = null)
         {
             SetClientScope(scope);
 
             var request = new RestRequest("/users", Method.Get);
 
-            if (!string.IsNullOrEmpty(olderThan))
-            {
-                request.AddQueryParameter("olderThan", olderThan);
-            }
-
-            if (!string.IsNullOrEmpty(youngerThan))
-            {
-                request.AddQueryParameter("youngerThan", youngerThan);
-            }
-
-            if (!string.IsNullOrEmpty(sex))
-            {
-                request.AddQueryParameter("sex", sex);
-            }
+            AddParameters(request, parameters);
 
             return _client.Get(request);
+        }
+
+        public RestRequest AddParameters(RestRequest request, List<(string name, string value)>? parameters = null)
+        {
+            if (parameters == null || parameters.Count == 0) return request;
+
+            foreach (var parameter in parameters)
+            {
+                request.AddQueryParameter(parameter.name, parameter.value);
+            }
+
+            return request;
         }
     }
 }

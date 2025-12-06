@@ -49,7 +49,11 @@ namespace RestApiCSharp.Tests
         [Test]
         public void GetUsersOlderThan_Return200_Test()
         {
-            RestResponse response = ApiClientInstance.GetUsers(ConstantsTesting.ReadScope, olderThan: "6");
+            var parameters = new List<(string name, string value)>
+            {
+                ("olderThan", "6"),
+            };
+            RestResponse response = ApiClientInstance.GetUsers(ConstantsTesting.ReadScope, parameters);
 
             Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK),
                 $"Status code 200 not returned." +
@@ -60,7 +64,11 @@ namespace RestApiCSharp.Tests
         [Test]
         public void GetUsersOlderThan_UserAdded_Test()
         {
-            RestResponse response = ApiClientInstance.GetUsers(ConstantsTesting.ReadScope, olderThan: "6");
+            var parameters = new List<(string name, string value)>
+            {
+                ("olderThan", "6"),
+            };
+            RestResponse response = ApiClientInstance.GetUsers(ConstantsTesting.ReadScope, parameters);
 
             var expectedUsers = new[] { "uGetUsersTests2", "uGetUsersTests3", "uGetUsersTests4" };
 
@@ -76,7 +84,11 @@ namespace RestApiCSharp.Tests
         [Test]
         public void GetUsersYoungerThan_Return200_Test()
         {
-            RestResponse response = ApiClientInstance.GetUsers(ConstantsTesting.ReadScope, youngerThan: "6");
+            var parameters = new List<(string name, string value)>
+            {
+                ("youngerThan", "6")
+            };
+            RestResponse response = ApiClientInstance.GetUsers(ConstantsTesting.ReadScope, parameters);
 
             Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK),
                 $"Status code 200 not returned." +
@@ -87,7 +99,11 @@ namespace RestApiCSharp.Tests
         [Test]
         public void GetUsersYoungerThan_UserAdded_Test()
         {
-            RestResponse response = ApiClientInstance.GetUsers(ConstantsTesting.ReadScope, youngerThan: "6");
+            var parameters = new List<(string name, string value)>
+            {
+                ("youngerThan", "6")
+            };
+            RestResponse response = ApiClientInstance.GetUsers(ConstantsTesting.ReadScope, parameters);
 
             var expectedUsers = new[] { "uGetUsersTests1" };
 
@@ -103,7 +119,11 @@ namespace RestApiCSharp.Tests
         [Test]
         public void GetUsersSex_Return200_Test()
         {
-            RestResponse response = ApiClientInstance.GetUsers(ConstantsTesting.ReadScope, sex: "MALE");
+            var parameters = new List<(string name, string value)>
+            {
+                ("sex", "MALE")
+            };
+            RestResponse response = ApiClientInstance.GetUsers(ConstantsTesting.ReadScope, parameters);
 
             Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK),
                 $"Status code 200 not returned." +
@@ -114,7 +134,11 @@ namespace RestApiCSharp.Tests
         [Test]
         public void GetUsersSex_UserAdded_Test()
         {
-            RestResponse response = ApiClientInstance.GetUsers(ConstantsTesting.ReadScope, sex: "MALE");
+            var parameters = new List<(string name, string value)>
+            {
+                ("sex", "MALE")
+            };
+            RestResponse response = ApiClientInstance.GetUsers(ConstantsTesting.ReadScope, parameters);
 
             var expectedUsers = new[] { "uGetUsersTests3", "uGetUsersTests4" };
 
