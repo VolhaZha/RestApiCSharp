@@ -1,4 +1,5 @@
-﻿using RestApiCSharp.Authentication;
+﻿using NUnit.Framework.Internal;
+using RestApiCSharp.Authentication;
 using RestSharp;
 
 namespace RestApiCSharp.Clients
@@ -109,12 +110,27 @@ namespace RestApiCSharp.Clients
             }
         }
 
-        public RestResponse GetUsers(string scope)
+        public RestResponse GetUsers(string scope, List<(string name, string value)>? parameters = null)
         {
             SetClientScope(scope);
 
             var request = new RestRequest("/users", Method.Get);
+
+            AddParameters(request, parameters);
+
             return _client.Get(request);
+        }
+
+        public RestRequest AddParameters(RestRequest request, List<(string name, string value)>? parameters = null)
+        {
+            if (parameters == null || parameters.Count == 0) return request;
+
+            foreach (var parameter in parameters)
+            {
+                request.AddQueryParameter(parameter.name, parameter.value);
+            }
+
+            return request;
         }
     }
 }
