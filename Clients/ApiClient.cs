@@ -1,5 +1,5 @@
-﻿using NUnit.Framework.Internal;
-using RestApiCSharp.Authentication;
+﻿using RestApiCSharp.Authentication;
+using RestApiCSharp.Models;
 using RestSharp;
 
 namespace RestApiCSharp.Clients
@@ -131,6 +131,78 @@ namespace RestApiCSharp.Clients
             }
 
             return request;
+        }
+
+        public RestResponse UpdateUsersPatch(string scope, UserUpdate user)
+        {
+            SetClientScope(scope);
+
+            var request = new RestRequest("/users", Method.Patch);
+
+            if (user == null)
+            {
+                throw new ArgumentNullException(nameof(user), "User object cannot be null.");
+            }
+
+            request.AddJsonBody(user);
+
+            try
+            {
+                var response = _client.Patch(request);
+
+                if (!response.IsSuccessful)
+                {
+                    throw new HttpRequestException(
+                        $"Request failed with status code {response.StatusCode}. Response content: {response.Content}");
+                }
+
+                return response;
+            }
+            catch (HttpRequestException ex)
+            {
+                Console.WriteLine($"Request failed with exception: {ex.Message}");
+
+                return new RestResponse
+                {
+                    Content = ex.Message
+                };
+            }
+        }
+
+        public RestResponse UpdateUsersPut(string scope, UserUpdate user)
+        {
+            SetClientScope(scope);
+
+            var request = new RestRequest("/users", Method.Put);
+
+            if (user == null)
+            {
+                throw new ArgumentNullException(nameof(user), "User object cannot be null.");
+            }
+
+            request.AddJsonBody(user);
+
+            try
+            {
+                var response = _client.Put(request);
+
+                if (!response.IsSuccessful)
+                {
+                    throw new HttpRequestException(
+                        $"Request failed with status code {response.StatusCode}. Response content: {response.Content}");
+                }
+
+                return response;
+            }
+            catch (HttpRequestException ex)
+            {
+                Console.WriteLine($"Request failed with exception: {ex.Message}");
+
+                return new RestResponse
+                {
+                    Content = ex.Message
+                };
+            }
         }
     }
 }
