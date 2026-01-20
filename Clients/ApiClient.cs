@@ -204,5 +204,41 @@ namespace RestApiCSharp.Clients
                 };
             }
         }
+
+        public RestResponse DeleteUser(string scope, User user)
+        {
+            SetClientScope(scope);
+
+            var request = new RestRequest("/users", Method.Delete);
+
+            if (user == null)
+            {
+                throw new ArgumentNullException(nameof(user), "User object cannot be null.");
+            }
+
+            request.AddJsonBody(user);
+
+            try
+            {
+                var response = _client.Delete(request);
+
+                if (!response.IsSuccessful)
+                {
+                    throw new HttpRequestException(
+                        $"Request failed with status code {response.StatusCode}. Response content: {response.Content}");
+                }
+
+                return response;
+            }
+            catch (HttpRequestException ex)
+            {
+                Console.WriteLine($"Request failed with exception: {ex.Message}");
+
+                return new RestResponse
+                {
+                    Content = ex.Message
+                };
+            }
+        }
     }
 }
