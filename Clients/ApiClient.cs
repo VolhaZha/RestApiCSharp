@@ -207,14 +207,14 @@ namespace RestApiCSharp.Clients
 
         public RestResponse DeleteUser(string scope, User user)
         {
-            SetClientScope(scope);
-
-            var request = new RestRequest("/users", Method.Delete);
-
             if (user == null)
             {
                 throw new ArgumentNullException(nameof(user), "User object cannot be null.");
             }
+            
+            SetClientScope(scope);
+
+            var request = new RestRequest("/users", Method.Delete);
 
             request.AddJsonBody(user);
 
