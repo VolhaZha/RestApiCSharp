@@ -240,5 +240,38 @@ namespace RestApiCSharp.Clients
                 };
             }
         }
+
+        public RestResponse UploadFile(string scope, string filePath)
+        {
+            SetClientScope(scope);
+
+            var request = new RestRequest("/users/upload", Method.Post);
+
+            request.AlwaysMultipartFormData = true;
+
+            request.AddFile("file", filePath, "application/json");
+
+            try
+            {
+                var response = _client.Post(request);
+
+                if (!response.IsSuccessful)
+                {
+                    throw new HttpRequestException(
+                        $"Request failed with status code {response.StatusCode}. Response content: {response.Content}");
+                }
+
+                return response;
+            }
+            catch (HttpRequestException ex)
+            {
+                Console.WriteLine($"Request failed with exception: {ex.Message}");
+
+                return new RestResponse
+                {
+                    Content = ex.Message
+                };
+            }
+        }
     }
 }

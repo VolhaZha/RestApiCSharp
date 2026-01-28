@@ -1,0 +1,7 @@
+[
+  {
+    "age": 30,
+    "name": "uploaduser3",
+    "zipCode": "ozwrong3"
+  }
+]
