@@ -1,0 +1,14 @@
+[
+  {
+    "age": 30,
+    "name": "uploaduser",
+    "sex": "FEMALE",
+    "zipCode": "oz"
+  },
+  {
+    "age": 25,
+    "name": "uploaduser1",
+    "sex": "FEMALE",
+    "zipCode": "oz1"
+  }
+]
