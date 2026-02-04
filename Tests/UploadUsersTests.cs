@@ -1,8 +1,11 @@
-﻿using RestApiCSharp.ConstantsTestingGeneral;
+﻿using Allure.NUnit;
+using Allure.NUnit.Attributes;
+using RestApiCSharp.ConstantsTestingGeneral;
 using System.Net;
 
 namespace RestApiCSharp.Tests
 {
+    [AllureNUnit]
     public class UploadUsersTests : BaseApiTest
     {
         [SetUp]
@@ -40,6 +43,7 @@ namespace RestApiCSharp.Tests
         }
 
         [Test]
+        [AllureIssue("BUG_UploadUser_2")]
         public void UploadFileWrongZip_Return424_Test()
         {
             var filePathZipBad = Path.Combine(TestContext.CurrentContext.TestDirectory, "TestFiles", "UploadWrongZipTask70.txt");
@@ -63,6 +67,7 @@ namespace RestApiCSharp.Tests
         }
 
         [Test]
+        [AllureIssue("BUG_UploadUser_1")]
         public void UploadFileMissedField_Return409_Test()
         {
             var filePathMissReqField = Path.Combine(TestContext.CurrentContext.TestDirectory, "TestFiles", "UploadMissFieldTask70.txt");

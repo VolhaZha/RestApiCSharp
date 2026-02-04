@@ -1,9 +1,12 @@
-﻿using RestApiCSharp.ConstantsTestingGeneral;
+﻿using Allure.NUnit;
+using Allure.NUnit.Attributes;
+using RestApiCSharp.ConstantsTestingGeneral;
 using RestApiCSharp.Models;
 using System.Net;
 
 namespace RestApiCSharp.Tests
 {
+    [AllureNUnit]
     public class UpdateUsersTests : BaseApiTest
     {
         [SetUp]
@@ -142,6 +145,7 @@ namespace RestApiCSharp.Tests
         }
 
         [Test]
+        [AllureIssue("BUG_UpdateUser_1")]
         public void UpdateUserNotAllReqFieldsPatch_UserNotUpdated_Test()
         {
             var usersInitialCreation = new List<User>
@@ -190,6 +194,7 @@ namespace RestApiCSharp.Tests
         }
 
         [Test]
+        [AllureIssue("BUG_UpdateUser_2")]
         public void UpdateUserNotAllReqFieldsPut_UserNotUpdated_Test()
         {
             var usersInitialCreation = new List<User>

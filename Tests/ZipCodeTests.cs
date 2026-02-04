@@ -1,9 +1,12 @@
-﻿using RestApiCSharp.ConstantsTestingGeneral;
+﻿using Allure.NUnit;
+using Allure.NUnit.Attributes;
+using RestApiCSharp.ConstantsTestingGeneral;
 using RestSharp;
 using System.Net;
 
 namespace RestApiCSharp.Tests
 {
+    [AllureNUnit]
     public class ZipCodeTests : BaseApiTest
     {
         [SetUp]
@@ -69,6 +72,7 @@ namespace RestApiCSharp.Tests
         }
 
         [Test]
+        [AllureIssue("BUG_GetZip_1")]
         public void GetZipCodes_Return200()
         {
             RestResponse response = ApiClientInstance.GetZipCodes(ConstantsTesting.ReadScope);
@@ -119,6 +123,7 @@ namespace RestApiCSharp.Tests
         }
 
         [Test]
+        [AllureIssue("BUG_AddDuplicateZip_1")]
         public void AddDuplicateZipCodes_NoDuplicatesCreated()
         {
             var zipCodes = new List<string> { "oz1", "oz2" };

@@ -1,9 +1,11 @@
-﻿using RestApiCSharp.ConstantsTestingGeneral;
+﻿using Allure.NUnit;
+using RestApiCSharp.ConstantsTestingGeneral;
 using RestSharp;
 using System.Net;
 
 namespace RestApiCSharp.Tests
 {
+    [AllureNUnit]
     public class GetUsersTests : BaseApiTest
     {
 

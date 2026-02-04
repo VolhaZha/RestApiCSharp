@@ -1,10 +1,13 @@
-﻿using Newtonsoft.Json;
+﻿using Allure.NUnit;
+using Allure.NUnit.Attributes;
+using Newtonsoft.Json;
 using RestApiCSharp.ConstantsTestingGeneral;
 using RestSharp;
 using System.Net;
 
 namespace RestApiCSharp.Tests
 {
+    [AllureNUnit]
     public class UsersTests : BaseApiTest
     {
         [SetUp]
@@ -52,6 +55,7 @@ namespace RestApiCSharp.Tests
         }
 
         [Test]
+        [AllureIssue("BUG_AddUser_1")]
         public void AddUserAllFields_ZipCodeRemoved_Test()
         {
             RestResponse response = ApiClientInstance.GetZipCodes(ConstantsTesting.ReadScope);
@@ -115,6 +119,7 @@ namespace RestApiCSharp.Tests
         }
 
         [Test]
+        [AllureIssue("BUG_AddUser_2")]
         public void AddUserDuplicate_Return400_Test()
         {
             var user = new User
@@ -134,6 +139,7 @@ namespace RestApiCSharp.Tests
         }
 
         [Test]
+        [AllureIssue("BUG_AddUser_3")]
         public void AddUserDuplicate_UserNotAdded_Test()
         {
             var initialResponse = ApiClientInstance.GetUsers(ConstantsTesting.ReadScope);
