@@ -18,6 +18,7 @@ namespace RestApiCSharp.Tests
         }
 
         [Test]
+        [AllureStep("Upload users file and verify 201 Created response")]
         public void UploadFile_Return201_Test()
         {
             var filePathOk = Path.Combine(TestContext.CurrentContext.TestDirectory, "TestFiles", "UploadTask70.txt");
@@ -30,6 +31,7 @@ namespace RestApiCSharp.Tests
         }
 
         [Test]
+        [AllureStep("Upload users file and verify users are successfully uploaded")]
         public void UploadFile_UsersUploaded_Test()
         {
             var filePathOk = Path.Combine(TestContext.CurrentContext.TestDirectory, "TestFiles", "UploadTask70.txt");
@@ -44,6 +46,7 @@ namespace RestApiCSharp.Tests
 
         [Test]
         [AllureIssue("BUG_UploadUser_2")]
+        [AllureStep("Upload users file with incorrect zip code and verify FailedDependency response")]
         public void UploadFileWrongZip_Return424_Test()
         {
             var filePathZipBad = Path.Combine(TestContext.CurrentContext.TestDirectory, "TestFiles", "UploadWrongZipTask70.txt");
@@ -54,6 +57,7 @@ namespace RestApiCSharp.Tests
         }
 
         [Test]
+        [AllureStep("Upload users file with incorrect zip code and verify users are not uploaded")]
         public void UploadFileWrongZip_UsersNotUploaded_Test()
         {
             var filePathZipBad = Path.Combine(TestContext.CurrentContext.TestDirectory, "TestFiles", "UploadWrongZipTask70.txt");
@@ -68,6 +72,7 @@ namespace RestApiCSharp.Tests
 
         [Test]
         [AllureIssue("BUG_UploadUser_1")]
+        [AllureStep("Upload users file with missing required fields and verify Conflict response")]
         public void UploadFileMissedField_Return409_Test()
         {
             var filePathMissReqField = Path.Combine(TestContext.CurrentContext.TestDirectory, "TestFiles", "UploadMissFieldTask70.txt");
@@ -78,6 +83,7 @@ namespace RestApiCSharp.Tests
         }
 
         [Test]
+        [AllureStep("Upload users file with missing required fields and verify users are not uploaded")]
         public void UploadFileMissedField_UsersNotUploaded_Test()
         {
             var filePathMissReqField = Path.Combine(TestContext.CurrentContext.TestDirectory, "TestFiles", "UploadMissFieldTask70.txt");

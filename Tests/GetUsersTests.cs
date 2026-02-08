@@ -1,4 +1,5 @@
 ﻿using Allure.NUnit;
+using Allure.NUnit.Attributes;
 using RestApiCSharp.ConstantsTestingGeneral;
 using RestSharp;
 using System.Net;
@@ -24,6 +25,7 @@ namespace RestApiCSharp.Tests
         }
 
         [Test]
+        [AllureStep("Get users without filters and verify 200 OK response")]
         public void GetUsers_Return200_Test()
         {
             RestResponse response = ApiClientInstance.GetUsers(ConstantsTesting.ReadScope);
@@ -35,6 +37,7 @@ namespace RestApiCSharp.Tests
         }
 
         [Test]
+        [AllureStep("Get users without filters and verify all users are returned")]
         public void GetUsers_UserReceived_Test()
         {
             RestResponse response = ApiClientInstance.GetUsers(ConstantsTesting.ReadScope);
@@ -49,6 +52,7 @@ namespace RestApiCSharp.Tests
         }
 
         [Test]
+        [AllureStep("Get users older than specified age and verify 200 OK response")]
         public void GetUsersOlderThan_Return200_Test()
         {
             var parameters = new List<(string name, string value)>
@@ -64,6 +68,7 @@ namespace RestApiCSharp.Tests
         }
 
         [Test]
+        [AllureStep("Get users older than specified age and verify correct users are returned")]
         public void GetUsersOlderThan_UserAdded_Test()
         {
             var parameters = new List<(string name, string value)>
@@ -84,6 +89,7 @@ namespace RestApiCSharp.Tests
         }
 
         [Test]
+        [AllureStep("Get users younger than specified age and verify 200 OK response")]
         public void GetUsersYoungerThan_Return200_Test()
         {
             var parameters = new List<(string name, string value)>
@@ -99,6 +105,7 @@ namespace RestApiCSharp.Tests
         }
 
         [Test]
+        [AllureStep("Get users younger than specified age and verify correct users are returned")]
         public void GetUsersYoungerThan_UserAdded_Test()
         {
             var parameters = new List<(string name, string value)>
@@ -119,6 +126,7 @@ namespace RestApiCSharp.Tests
         }
 
         [Test]
+        [AllureStep("Get users filtered by sex and verify 200 OK response")]
         public void GetUsersSex_Return200_Test()
         {
             var parameters = new List<(string name, string value)>
@@ -134,6 +142,7 @@ namespace RestApiCSharp.Tests
         }
 
         [Test]
+        [AllureStep("Get users filtered by sex and verify only male users are returned")]
         public void GetUsersSex_UserAdded_Test()
         {
             var parameters = new List<(string name, string value)>
