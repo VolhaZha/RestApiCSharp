@@ -1,9 +1,12 @@
-﻿using RestApiCSharp.ConstantsTestingGeneral;
+﻿using Allure.NUnit;
+using Allure.NUnit.Attributes;
+using RestApiCSharp.ConstantsTestingGeneral;
 using RestApiCSharp.Models;
 using System.Net;
 
 namespace RestApiCSharp.Tests
 {
+    [AllureNUnit]
     public class UpdateUsersTests : BaseApiTest
     {
         [SetUp]
@@ -16,6 +19,7 @@ namespace RestApiCSharp.Tests
         }
 
         [Test]
+        [AllureStep("Update user via PATCH and verify user is updated successfully")]
         public void UpdateUserPatch_Return200_UserUpdated_Test()
         {
             var usersInitialCreation = new List<User>
@@ -43,6 +47,7 @@ namespace RestApiCSharp.Tests
         }
 
         [Test]
+        [AllureStep("Update user via PUT and verify user is updated successfully")]
         public void UpdateUserPut_Return200_UserUpdated_Test()
         {
             var usersInitialCreation = new List<User>
@@ -70,6 +75,7 @@ namespace RestApiCSharp.Tests
         }
 
         [Test]
+        [AllureStep("Update user via PATCH with incorrect zip code and verify update is rejected")]
         public void UpdateUserIncorrectZipCodePatch_Return424_UserNotUpdated_Test()
         {
             var usersInitialCreation = new List<User>
@@ -95,6 +101,7 @@ namespace RestApiCSharp.Tests
         }
 
         [Test]
+        [AllureStep("Update user via PUT with incorrect zip code and verify update is rejected")]
         public void UpdateUserIncorrectZipCodePut_Return424_UserNotUpdated_Test()
         {
             var usersInitialCreation = new List<User>
@@ -120,6 +127,7 @@ namespace RestApiCSharp.Tests
         }
 
         [Test]
+        [AllureStep("Update user via PATCH with missing required fields and verify conflict response")]
         public void UpdateUserNotAllReqFieldsPatch_Return409_Test()
         {
             var usersInitialCreation = new List<User>
@@ -142,6 +150,8 @@ namespace RestApiCSharp.Tests
         }
 
         [Test]
+        [AllureIssue("BUG_UpdateUser_1")]
+        [AllureStep("Update user via PATCH with missing required fields and verify user is not updated")]
         public void UpdateUserNotAllReqFieldsPatch_UserNotUpdated_Test()
         {
             var usersInitialCreation = new List<User>
@@ -167,6 +177,7 @@ namespace RestApiCSharp.Tests
         }
 
         [Test]
+        [AllureStep("Update user via PUT with missing required fields and verify conflict response")]
         public void UpdateUserNotAllReqFieldsPut_Return409_Test()
         {
             var usersInitialCreation = new List<User>
@@ -190,6 +201,8 @@ namespace RestApiCSharp.Tests
         }
 
         [Test]
+        [AllureIssue("BUG_UpdateUser_2")]
+        [AllureStep("Update user via PUT with missing required fields and verify user is not updated")]
         public void UpdateUserNotAllReqFieldsPut_UserNotUpdated_Test()
         {
             var usersInitialCreation = new List<User>

@@ -1,6 +1,7 @@
-﻿using RestApiCSharp.Clients;
-using RestSharp;
+﻿using NLog;
+using RestApiCSharp.Clients;
 using RestApiCSharp.ConstantsTestingGeneral;
+using RestSharp;
 
 namespace RestApiCSharp.Tests
 {
@@ -8,9 +9,11 @@ namespace RestApiCSharp.Tests
     {
         protected RestClient Client { get; private set; }
         protected ApiClient ApiClientInstance { get; private set; }
-
+        protected static readonly ILogger Logger = LogManager.GetCurrentClassLogger();
         protected BaseApiTest()
         {
+            Logger.Info("Initializing BaseApiTest");
+
             ApiClient.Initialize(
                 baseUrl: ConstantsTesting.BaseUrl,
                 clientId: ConstantsTesting.ClientId,
@@ -18,6 +21,8 @@ namespace RestApiCSharp.Tests
             );
 
             ApiClientInstance = ApiClient.GetInstance();
+
+            Logger.Info("ApiClient initialized successfully");
         }
     }
 }
