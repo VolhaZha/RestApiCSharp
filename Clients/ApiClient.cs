@@ -54,8 +54,12 @@ namespace RestApiCSharp.Clients
             var request = new RestRequest("/zip-codes/expand", Method.Post);
 
             request.AddJsonBody(zipCodes);
+            AllureHelpers.AttachRequestContentToReport(request);
 
-            return _client.Post(request);
+            var response = _client.Post(request);
+
+            AllureHelpers.AttachResponseContentToReport(response);
+            return response;
         }
 
         public RestResponse GetZipCodes(string scope)
@@ -63,7 +67,13 @@ namespace RestApiCSharp.Clients
             SetClientScope(scope);
 
             var request = new RestRequest("/zip-codes", Method.Get);
-            return _client.Get(request);
+
+            AllureHelpers.AttachRequestContentToReport(request);
+
+            var response = _client.Get(request);
+
+            AllureHelpers.AttachResponseContentToReport(response); 
+            return response;
         }
 
         public RestResponse CreateUsers (string scope, User user)
@@ -78,10 +88,13 @@ namespace RestApiCSharp.Clients
             }
 
             request.AddJsonBody(user);
+            AllureHelpers.AttachRequestContentToReport(request);
 
             try
             {
                 var response = _client.Post(request);
+
+                AllureHelpers.AttachResponseContentToReport(response);
 
                 if (!response.IsSuccessful)
                 {
@@ -117,8 +130,12 @@ namespace RestApiCSharp.Clients
             var request = new RestRequest("/users", Method.Get);
 
             AddParameters(request, parameters);
+            AllureHelpers.AttachRequestContentToReport(request);
 
-            return _client.Get(request);
+            var response = _client.Get(request);
+
+            AllureHelpers.AttachResponseContentToReport(response);
+            return response;
         }
 
         public RestRequest AddParameters(RestRequest request, List<(string name, string value)>? parameters = null)
@@ -145,11 +162,13 @@ namespace RestApiCSharp.Clients
             }
 
             request.AddJsonBody(user);
+            AllureHelpers.AttachRequestContentToReport(request);
 
             try
             {
                 var response = _client.Patch(request);
 
+                AllureHelpers.AttachResponseContentToReport(response);
                 if (!response.IsSuccessful)
                 {
                     throw new HttpRequestException(
@@ -181,11 +200,13 @@ namespace RestApiCSharp.Clients
             }
 
             request.AddJsonBody(user);
+            AllureHelpers.AttachRequestContentToReport(request);
 
             try
             {
                 var response = _client.Put(request);
 
+                AllureHelpers.AttachResponseContentToReport(response);
                 if (!response.IsSuccessful)
                 {
                     throw new HttpRequestException(
@@ -217,11 +238,13 @@ namespace RestApiCSharp.Clients
             var request = new RestRequest("/users", Method.Delete);
 
             request.AddJsonBody(user);
+            AllureHelpers.AttachRequestContentToReport(request);
 
             try
             {
                 var response = _client.Delete(request);
 
+                AllureHelpers.AttachResponseContentToReport(response);
                 if (!response.IsSuccessful)
                 {
                     throw new HttpRequestException(

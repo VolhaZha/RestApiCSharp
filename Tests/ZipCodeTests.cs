@@ -1,9 +1,12 @@
-﻿using RestApiCSharp.ConstantsTestingGeneral;
+﻿using Allure.NUnit;
+using Allure.NUnit.Attributes;
+using RestApiCSharp.ConstantsTestingGeneral;
 using RestSharp;
 using System.Net;
 
 namespace RestApiCSharp.Tests
 {
+    [AllureNUnit]
     public class ZipCodeTests : BaseApiTest
     {
         [SetUp]
@@ -15,6 +18,7 @@ namespace RestApiCSharp.Tests
         }
 
         [Test]
+        [AllureStep("Add a single zip code and verify 201 Created response")]
         public void AddOneZipCode_Return201()
         {
             var zipCodes = new List<string> { "ozoz" };
@@ -28,6 +32,7 @@ namespace RestApiCSharp.Tests
         }
 
         [Test]
+        [AllureStep("Add a single zip code and verify it is present in zip codes list")]
         public void AddOneZipCode_ZipCodeAdded()
         {
             var zipCodes = new List<string> { "ozoz" };
@@ -40,6 +45,7 @@ namespace RestApiCSharp.Tests
         }
 
         [Test]
+        [AllureStep("Add several zip codes and verify 201 Created response")]
         public void AddSeveralZipCodes_Return201()
         {
             var zipCodes = new List<string> { "ozoz1", "ozoz2", "ozoz3" };
@@ -53,6 +59,7 @@ namespace RestApiCSharp.Tests
         }
 
         [Test]
+        [AllureStep("Add several zip codes and verify all are present in zip codes list")]
         public void AddSeveralZipCodes_ZipCodesAdded()
         {
             var zipCodes = new List<string> { "ozoz1", "ozoz2", "ozoz3" };
@@ -69,6 +76,8 @@ namespace RestApiCSharp.Tests
         }
 
         [Test]
+        [AllureIssue("BUG_GetZip_1")]
+        [AllureStep("Get all zip codes and verify 200 OK response")]
         public void GetZipCodes_Return200()
         {
             RestResponse response = ApiClientInstance.GetZipCodes(ConstantsTesting.ReadScope);
@@ -80,6 +89,7 @@ namespace RestApiCSharp.Tests
         }
 
         [Test]
+        [AllureStep("Get all available zip codes and verify expected zip codes are returned")]
         public void GetZipCodes_GetAllAvailableZipCodes()
         {
             RestResponse response = ApiClientInstance.GetZipCodes(ConstantsTesting.ReadScope);
@@ -94,6 +104,7 @@ namespace RestApiCSharp.Tests
         }
 
         [Test]
+        [AllureStep("Add duplicate zip codes and verify 201 Created response")]
         public void AddDuplicateZipCodes_Return201()
         {
             var zipCodes = new List<string> { "oz1", "oz2" };
@@ -107,6 +118,7 @@ namespace RestApiCSharp.Tests
         }
 
         [Test]
+        [AllureStep("Add duplicate zip code and verify it exists in zip codes list")]
         public void AddDuplicateZipCodes_ZipCodesAdded()
         {
             var zipCodes = new List<string> { "oz3" };
@@ -119,6 +131,8 @@ namespace RestApiCSharp.Tests
         }
 
         [Test]
+        [AllureIssue("BUG_AddDuplicateZip_1")]
+        [AllureStep("Add duplicate zip codes and verify no duplicate entries are created")]
         public void AddDuplicateZipCodes_NoDuplicatesCreated()
         {
             var zipCodes = new List<string> { "oz1", "oz2" };

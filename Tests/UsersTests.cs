@@ -1,10 +1,13 @@
-﻿using Newtonsoft.Json;
+﻿using Allure.NUnit;
+using Allure.NUnit.Attributes;
+using Newtonsoft.Json;
 using RestApiCSharp.ConstantsTestingGeneral;
 using RestSharp;
 using System.Net;
 
 namespace RestApiCSharp.Tests
 {
+    [AllureNUnit]
     public class UsersTests : BaseApiTest
     {
         [SetUp]
@@ -24,6 +27,7 @@ namespace RestApiCSharp.Tests
         }
 
         [Test]
+        [AllureStep("Create user with all fields and verify 201 Created response")]
         public void AddUserAllFields_Return201_Test()
         {
             var user = new User
@@ -43,6 +47,7 @@ namespace RestApiCSharp.Tests
         }
 
         [Test]
+        [AllureStep("Verify user created with all fields is present in users list")]
         public void AddUserAllFields_UserAdded_Test()
         {
             RestResponse response = ApiClientInstance.GetUsers(ConstantsTesting.ReadScope);
@@ -52,6 +57,8 @@ namespace RestApiCSharp.Tests
         }
 
         [Test]
+        [AllureIssue("BUG_AddUser_1")]
+        [AllureStep("Verify zip code is removed after creating user with all fields")]
         public void AddUserAllFields_ZipCodeRemoved_Test()
         {
             RestResponse response = ApiClientInstance.GetZipCodes(ConstantsTesting.ReadScope);
@@ -61,6 +68,7 @@ namespace RestApiCSharp.Tests
         }
 
         [Test]
+        [AllureStep("Create user with required fields only and verify 201 Created response")]
         public void AddUserReqFields_Return201_Test()
         {
             var user = new User
@@ -78,6 +86,7 @@ namespace RestApiCSharp.Tests
         }
 
         [Test]
+        [AllureStep("Verify user created with required fields only is present in users list")]
         public void AddUserReqFields_UserAdded_Test()
         {
             RestResponse response = ApiClientInstance.GetUsers(ConstantsTesting.ReadScope);
@@ -87,6 +96,7 @@ namespace RestApiCSharp.Tests
         }
 
         [Test]
+        [AllureStep("Create user with incorrect zip code and verify FailedDependency response")]
         public void AddUserIncorrectZipCode_Return424_Test()
         {
             var user = new User
@@ -106,6 +116,7 @@ namespace RestApiCSharp.Tests
         }
 
         [Test]
+        [AllureStep("Verify user is not created when incorrect zip code is provided")]
         public void AddUserIncorrectZipCode_UserNotAdded_Test()
         {
             RestResponse response = ApiClientInstance.GetUsers(ConstantsTesting.ReadScope);
@@ -115,6 +126,8 @@ namespace RestApiCSharp.Tests
         }
 
         [Test]
+        [AllureIssue("BUG_AddUser_2")]
+        [AllureStep("Create duplicate user and verify 400 BadRequest response")]
         public void AddUserDuplicate_Return400_Test()
         {
             var user = new User
@@ -134,6 +147,8 @@ namespace RestApiCSharp.Tests
         }
 
         [Test]
+        [AllureIssue("BUG_AddUser_3")]
+        [AllureStep("Verify duplicate user is not added to users list")]
         public void AddUserDuplicate_UserNotAdded_Test()
         {
             var initialResponse = ApiClientInstance.GetUsers(ConstantsTesting.ReadScope);

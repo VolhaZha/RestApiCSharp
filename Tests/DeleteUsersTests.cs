@@ -1,8 +1,11 @@
-﻿using RestApiCSharp.ConstantsTestingGeneral;
+﻿using Allure.NUnit;
+using Allure.NUnit.Attributes;
+using RestApiCSharp.ConstantsTestingGeneral;
 using System.Net;
 
 namespace RestApiCSharp.Tests
 {
+    [AllureNUnit]
     public class DeleteUsersTests : BaseApiTest
     {
         [SetUp]
@@ -15,6 +18,8 @@ namespace RestApiCSharp.Tests
         }
 
         [Test]
+        [AllureIssue("BUG_DeleteUser_1")]
+        [AllureStep("Delete user and validate response")]
         public void DeleteUser_AllFields_Return204_UserDeleted_ZipCodeReturned_Test()
         {
             var user = new User
@@ -42,6 +47,8 @@ namespace RestApiCSharp.Tests
         }
 
         [Test]
+        [AllureIssue("BUG_DeleteUser_2")]
+        [AllureStep("Delete user with required fields and validate response")]
         public void DeleteUser_RequiredFields_Return204_UserDeleted_ZipCodeReturned_Test()
         {
             var user = new User
@@ -75,6 +82,8 @@ namespace RestApiCSharp.Tests
         }
 
         [Test]
+        [AllureIssue("BUG_DeleteUser_3")]
+        [AllureStep("Delete user and validate response")]
         public void DeleteUser_RequiredFieldsBoth_Return204_UserDeleted_Test()
         {
             var user = new User
@@ -97,6 +106,7 @@ namespace RestApiCSharp.Tests
         }
 
         [Test]
+        [AllureStep("Delete user with missing required fields and check for conflict")]
         public void DeleteUser_NotAllReqFields_Return409_UserNotDeleted_Test()
         {
             var user = new User
